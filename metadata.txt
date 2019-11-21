@@ -1,0 +1,25 @@
+==UserScript==
+@name Yandex Music MSA Integration
+@name:ru Интеграция MSA для Яндекс Музыки
+@description Integrates Yandex Music with MediaSession API
+@description:ru Интегрирует Яндекс Музыку с API MediaSession
+@version <%= pkg.version %>
+@author <%= pkg.author.name %><%= pkg.author.email ? ` <${pkg.author.email}> ` : "" %><%= pkg.author.url ? ` ${pkg.author.url}` : "" %>
+@license <%= pkg.license %>
+<% _.forEach(pkg.contributors, function (contributor) { %>
+@contributor <%= contributor.name %><%= contributor.email ? ` <${contributor.email}> ` : "" %><%= contributor.url ? ` ${contributor.url}` : "" %>
+<% }) %>
+@namespace <%= pkg.homepage %>
+@homepage <%= pkg.homepage %>
+@supportURL <%= pkg.bugs.url %>
+@updateURL https://raw.githubusercontent.com/Sasha-Sorokin/ymusic_msa/master/dist/ymusic_msa.user.js
+@grant GM.notification
+@grant GM_notification
+@grant GM.setValue
+@grant GM_setValue
+@grant GM.getValue
+@grant GM_getValue
+@include https://music.yandex.ru/*
+@run-at document-end
+@noframes
+==/UserScript==
