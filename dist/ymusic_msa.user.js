@@ -4,14 +4,14 @@
 // @name:ru Интеграция MSA для Яндекс Музыки
 // @description Integrates Yandex Music with MediaSession API
 // @description:ru Интегрирует Яндекс Музыку с API MediaSession
-// @version 1.0.0
+// @version 1.0.1
 // @author Sasha Sorokin https://github.com/Sasha-Sorokin
 // @license MIT
 //
 // @namespace https://github.com/Sasha-Sorokin/ymusic_msa/
 // @homepage https://github.com/Sasha-Sorokin/ymusic_msa/
 // @supportURL https://github.com/Sasha-Sorokin/ymusic_msa/issues/
-// @updateURL https://raw.githubusercontent.com/Sasha-Sorokin/ymusic_msa/master/ymusic_msa.user.js
+// @updateURL https://raw.githubusercontent.com/Sasha-Sorokin/ymusic_msa/master/dist/ymusic_msa.user.js
 // @grant GM.notification
 // @grant GM_notification
 // @grant GM.setValue
@@ -2184,7 +2184,7 @@
         notify.show(text);
     }
 
-    const currentVersion = "1.0.0--1574341798397";
+    const currentVersion = "1.0.1--1574346585572";
     Logger.setBaseName("Yandex.Music MSA");
     const logger$1 = new Logger("Bootstrap");
     logger$1.log("log", "Initializing...");
