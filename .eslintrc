@@ -1,0 +1,295 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2019,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": false,
+            "modules": true
+        },
+        "project": "./tsconfig.json"
+    },
+    "env": {
+        "greasemonkey": true,
+        "es6": true,
+        "browser": true
+    },
+    "rules": {
+        // I believe function definition must be wrapped and only then
+        // executed, function (){}() is not clear at all when with
+        // (function () {})() you clearly see where function wrapped
+        // and only then its execution
+        "wrap-iife": [
+            2,
+            "inside"
+        ],
+        // We live in 2019 and not using tabs is bad idea when most
+        // editors already support them. Tabs allow us to use as
+        // much space as we want, when spaces are strict enough and
+        // may lead to problems with readability (for me at least,
+        // I love larger spaces to clearly see blocks)
+        // "indent": [
+        //     2,
+        //     "tab",
+        //     {
+        //         "SwitchCase": 1
+        //     }
+        // ],
+        "no-tabs": "off",
+        // I strongly prefer double quotes, there are the reasons
+        // "quotes": [
+        //     2,
+        //     "double"
+        // ],
+        // We have to use console to log a few things and odds
+        "no-console": "off",
+        // no-lone-blocks "incorrectly" selects switch blocks and
+        // does not allow to disable this behavior, which is, I think,
+        // leaves us to use unclear python-like tabulation in JS
+        "no-lone-blocks": "off",
+        // I think sometimes you clearly want to adapt param for further
+        // function execution
+        "no-param-reassign": "off",
+        // Cannot agree on restriction for "ForOfStatement", for-of are far more readable
+        // and nice to use in the code, so it needs an override.
+        // See: https://github.com/airbnb/javascript/blob/64b965efe0355c8290996ff5a675cd8fb30bf843/packages/eslint-config-airbnb-base/rules/style.js#L334
+        "no-restricted-syntax": [
+            "error",
+            {
+                "selector": "ForInStatement",
+                "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
+            },
+            {
+                "selector": "LabeledStatement",
+                "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
+            },
+            {
+                "selector": "WithStatement",
+                "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
+            }
+        ],
+        // I'm not even sure why this one is enabled in the first place
+        "no-continue": "off",
+        // Disallow calling not defined variables
+        "no-undef": "off",
+        // Allow inner declaration (useful for creating callbacks)
+        "no-inner-declarations": "off",
+        // Allow class members to not use this
+        "class-methods-use-this": "off",
+        // It does not work correctly with TypeScript
+        "import/no-unresolved": "off",
+        // I just wanted to disable requirement in imports...
+        "object-curly-spacing": "off",
+        // Do not require JSDoc types in TypeScript
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns-type": "off",
+        // Whoever forces this is a moster
+        "import/prefer-default-export": "off",
+        "import/no-named-default": "off",
+        "object-curly-newline": ["error", {
+            "ImportDeclaration": "never"
+        }],
+
+        // ================================
+        // ========== TYPESCRIPT ==========
+        // ================================
+
+        // Disallow multiple declarations of function with same set of arguments but different types
+        "@typescript-eslint/adjacent-overload-signatures": "error",
+        // Simple array Types[] instead of Array<Types>
+        "@typescript-eslint/array-type": ["error", {
+            "default": "array"
+        }],
+        // Disallow await on non-thenable objects
+        "@typescript-eslint/await-thenable": "error",
+        // Ban @ts-ignore comments
+        "@typescript-eslint/ban-ts-ignore": "error",
+        // Ban some types like String to be used
+        "@typescript-eslint/ban-types": "error",
+        "brace-style": "off", // Disabled for:
+        // Allow to skip braces for single line blocks
+        // if (something) return somethingElse;
+        "@typescript-eslint/brace-style": ["error", "1tbs"],
+        "camelcase": "off", // Disabled for:
+        // Always use camelCase expect for constansts
+        "@typescript-eslint/camelcase": ["error", {
+            "properties": "always"
+        }],
+        // Use PascalCase for classes with _UnderscopeAllowed
+        "@typescript-eslint/class-name-casing": ["error", {
+            "allowUnderscorePrefix": true
+        }],
+        // Use <Bracket> typeCasting
+        "@typescript-eslint/consistent-type-assertions": ["error", {
+            "assertionStyle": "angle-bracket"
+        }],
+        // Always require interfaces, but use types for unions
+        "@typescript-eslint/consistent-type-definitions": "error",
+        // Always require method accessibility to be written down but not for constructors
+        "@typescript-eslint/explicit-member-accessibility": ["error", {
+            "overrides": {
+                "constructors": "no-public"
+            }
+        }],
+        "func-call-spacing": "off", // Disabled for:
+        // Disallow usage of spaces in function defenitions
+        // e.g. function something () is disallowed
+        "@typescript-eslint/func-call-spacing": ["error"],
+        "indent": "off", // Disabled for:
+        // Set identation to tabs and use require one tab in switch cases
+        "@typescript-eslint/indent": ["error", "tab", {
+            "SwitchCase": 1
+        }],
+        // Require interfaces to be prefixed
+        "@typescript-eslint/interface-name-prefix": ["error", {
+            "prefixWithI": "always"
+        }],
+        // Always require commas as delimiters and last in multilines
+        "@typescript-eslint/member-delimiter-style": ["error", {
+            "multiline": {
+                "delimiter": "semi",
+                "requireLast": true
+            },
+            "singleline": {
+                "delimiter": "comma",
+                "requireLast": false
+            }
+        }],
+        "no-underscore-dangle": ["error", {
+            "enforceInMethodNames": false,
+            "allowAfterThis": true
+        }],
+        // Require private properties to be prefixed with _
+        "@typescript-eslint/member-naming": ["error", {
+            "private": "(^_|^\\$[A-Z0-9_]+$)"
+        }],
+        // Disallow usage of Array(1,2,3)
+        "@typescript-eslint/no-array-constructor": "error",
+        // Disallow empty functions
+        "@typescript-eslint/no-empty-function": "error",
+        // Disallow empty interfaces
+        "@typescript-eslint/no-empty-interface": "error",
+        // Disallow usage of "any" type but allow for the ...rest params and fix where unknown to "unknown" type
+        "@typescript-eslint/no-explicit-any": ["error", {
+            "fixToUnknown": true,
+            "ignoreRestArgs": true
+        }],
+        "no-extra-parens": "off", // Disabled for:
+        // Disallow unnecessary (parens)
+        "@typescript-eslint/no-extra-parens": "error",
+        // Disallow usage of classes as namespace objects
+        "@typescript-eslint/no-extraneous-class": "error",
+        // Require promises to be awaiter or otherwise void'ed
+        // e.g. void promiseFunc();
+        "@typescript-eslint/no-floating-promises": ["error", {
+            "ignoreVoid": true
+        }],
+        // Allow for-in to be used only on objects but not arrays
+        "@typescript-eslint/no-for-in-array": "error",
+        // Disallow explicit type declarations on variables where the type can be easily inferred from its value
+        // e.g. const a: bigint = BigInt(10)
+        "@typescript-eslint/no-inferrable-types": ["error", {
+            "ignoreParameters": true,
+            "ignoreProperties": true
+        }],
+        "no-magic-numbers": "off", // Disabled for:
+        // Allow magic numbers only in literal types and enums
+        "@typescript-eslint/no-magic-numbers": ["error", {
+            "ignoreNumericLiteralTypes": true,
+            "ignoreEnums": true,
+            "ignore": [0]
+        }],
+        // Warns on apparent attempts to define constructors for interfaces or new for classes
+        "@typescript-eslint/no-misused-new": "error",
+        // Disallow usage of namespaces
+        "@typescript-eslint/no-namespace": "error",
+        // Disallow parameter property definitions in constructors
+        "@typescript-eslint/no-parameter-properties": "error",
+        // Disallow require's and force usage of TS' import
+        "@typescript-eslint/no-require-imports": "error",
+        // Disallow aliasing of this
+        // e.g. const self = this;
+        "@typescript-eslint/no-this-alias": ["error", {
+            "allowDestructuring": true
+        }],
+        // Prevents conditionals where the type is always truthy or always falsy
+        "@typescript-eslint/no-unnecessary-condition": "error",
+        // Warns if an explicitly specified type argument is the default for that type parameter
+        "@typescript-eslint/no-unnecessary-type-arguments": "error",
+        // Warns if a type assertion does not change the type of an expression
+        "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        // Requires that all public method arguments and return type will be explicitly typed
+        // "@typescript-eslint/no-untyped-public-signature": "error",
+        "no-unused-expressions": "off", // Disabled for:
+        // Disallow unused expressions
+        "@typescript-eslint/no-unused-expressions": "error",
+        "no-unused-vars": "off", // Disabled for:
+        // Disallow unused variables
+        "@typescript-eslint/no-unused-vars": "error",
+        // Disallow the use of variables before they are defined
+        "@typescript-eslint/no-use-before-define": "error",
+        "no-useless-constructor": "off", // Disabled for:
+        // Disallow unnecessary constructors
+        "@typescript-eslint/no-useless-constructor": "error",
+        // Disallows the use of require statements except in import statements
+        "@typescript-eslint/no-var-requires": "error",
+        // Prefer a for-of loop over a standard for loop if the index is only used to access the array being iterated
+        "@typescript-eslint/prefer-for-of": "error",
+        // Use function types instead of interfaces with call signatures
+        "@typescript-eslint/prefer-function-type": "error",
+        // Enforce includes method over indexOf method
+        "@typescript-eslint/prefer-includes": "error",
+        // Requires that private members are marked as readonly if they're never modified outside of the constructor
+        "@typescript-eslint/prefer-readonly": "error",
+        // Prefer RegExp#exec() over String#match() if no global flag is provided
+        "@typescript-eslint/prefer-regexp-exec": "error",
+        // Enforce the use of String#startsWith and String#endsWith instead of other equivalent methods of checking substrings
+        "@typescript-eslint/prefer-string-starts-ends-with": "error",
+        // Requires any function or method that returns a Promise to be marked async
+        "@typescript-eslint/promise-function-async": "error",
+        "quotes": "off", // Disabled for:
+        // Enforce the consistent use of double quotes
+        "@typescript-eslint/quotes": ["error", "double"],
+        "@typescript-eslint/require-array-sort-compare": "error",
+        "require-await": "off", // Disabled for:
+        // Disallow async functions which have no await expression
+        "@typescript-eslint/require-await": "error",
+        // When adding two variables, operands must both be of type number or of type string
+        "@typescript-eslint/restrict-plus-operands": "error",
+        "semi": "off", // Disabled for:
+        // Require semicolons instead of ASI
+        "@typescript-eslint/semi": "error",
+        "no-spaced-func": "off",
+        "space-before-function-paren": "off", // Disabled for:
+        // Enforce consistent spacing before function definition opening parenthesis
+        // "@typescript-eslint/space-before-function-paren": "error",
+        // Restricts the types allowed in boolean expressions
+        "@typescript-eslint/strict-boolean-expressions": "error",
+        // Require consistent spacing around type annotations
+        "@typescript-eslint/type-annotation-spacing": "error",
+        // Requires type annotations to exist
+        // "@typescript-eslint/typedef": "error",
+        // Enforces unbound methods are called with their expected scope
+        "@typescript-eslint/unbound-method": "error",
+        // Warns for any two overloads that could be unified into one by using a union or an optional/rest parameter
+        "@typescript-eslint/unified-signatures": "error",
+        "@typescript-eslint/tslint/config": ["error", {
+            "lintFile": "./tslint.json"
+        }]
+    },
+    "extends": [
+        "eslint-config-airbnb-base",
+        "plugin:jsdoc/recommended"
+    ],
+    "plugins": [
+        "jsdoc",
+        "@typescript-eslint",
+        "@typescript-eslint/tslint"
+    ],
+    "settings": {
+        "jsdoc": {
+            "mode": "closure"
+        },
+        "cache": "true"
+    }
+}
