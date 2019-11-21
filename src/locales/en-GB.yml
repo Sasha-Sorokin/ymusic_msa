@@ -4,7 +4,7 @@ mediaKeys:
 
 previousSeeking:
   title: "‘Previous track’ key will rewind to beginning"
-  description: "‘Previous’ media key will be rewinding to beginning if track played for less than two seconds."
+  description: "‘Previous’ media key will be rewinding to beginning if track played for more than two seconds."
 
 latestNext: 
   title: "Do not disable ‘Next track’ at the end of playlist"
