@@ -4,7 +4,7 @@
 // @name:ru Интеграция MSA для Яндекс Музыки
 // @description Integrates Yandex Music with MediaSession API
 // @description:ru Интегрирует Яндекс Музыку с API MediaSession
-// @version 1.0.1
+// @version 1.0.2
 // @author Sasha Sorokin https://github.com/Sasha-Sorokin
 // @license MIT
 //
@@ -401,7 +401,7 @@
     var data = { mediaKeys:{ title:"Управление медиа-клавишами",
         description:"Здесь вы можете изменить поведение медиа-клавиш." },
       previousSeeking:{ title:"«Прошлый трек» перематывает в начало",
-        description:"Медиа-клавиша «прошлый трек» будет перематывать в начало, если трек играл менее двух секунд." },
+        description:"Медиа-клавиша «прошлый трек» будет перематывать в начало, если трек играл более двух секунд." },
       latestNext:{ title:"Не отключать «следующий трек» в конце плейлиста",
         description:"Медиа-клавиша «следующий трек» будет использоваться для остановки в конце плейлиста." },
       nowPlayingHeader:"Уведомления об играющих треках",
@@ -451,7 +451,7 @@
     var data$1 = { mediaKeys:{ title:"Managing media keys",
         description:"Here you can change behaviour of media keys." },
       previousSeeking:{ title:"‘Previous track’ key will rewind to beginning",
-        description:"‘Previous’ media key will be rewinding to beginning if track played for less than two seconds." },
+        description:"‘Previous’ media key will be rewinding to beginning if track played for more than two seconds." },
       latestNext:{ title:"Do not disable ‘Next track’ at the end of playlist",
         description:"‘Next track’ key will be used as ‘Stop’ at the end of playlists." },
       nowPlayingHeader:"Now Playing notifications",
@@ -2184,7 +2184,7 @@
         notify.show(text);
     }
 
-    const currentVersion = "1.0.1--1574346585572";
+    const currentVersion = "1.0.2--1574347226037";
     Logger.setBaseName("Yandex.Music MSA");
     const logger$1 = new Logger("Bootstrap");
     logger$1.log("log", "Initializing...");
