@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+        "module": "es2015",
+        "target": "es6",
+        "lib": [
+            "dom",
+            "esnext"
+        ],
+        "strict": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "outDir": "./dist",
+        "baseUrl": ".",
+        "paths": {
+            "@common/*": ["./src/common/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@locales": ["./src/locales/_locales"]
+        },
+        "allowJs": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
