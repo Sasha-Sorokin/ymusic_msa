@@ -1,0 +1,40 @@
+mediaKeys:
+  title: "Managing media keys"
+  description: "Here you can change behaviour of media keys."
+
+previousSeeking:
+  title: "‘Previous track’ key will rewind to beginning"
+  description: "‘Previous’ media key will be rewinding to beginning if track played for less than two seconds."
+
+latestNext: 
+  title: "Do not disable ‘Next track’ at the end of playlist"
+  description: "‘Next track’ key will be used as ‘Stop’ at the end of playlists."
+
+nowPlayingHeader: "Now Playing notifications"
+
+notifications: 
+  title: "Turn on notifications"
+  description: "When playing music in background, show notifications for currently playing track."
+
+notificationsDismiss:
+  title: "Notifications closing"
+  description: "Some browsers automatically close notifications, but some not."
+
+notificationsDismissTime:
+  3s: "3 seconds after"
+  5s: "5 seconds after"
+  Auto: "Automatically"
+
+toggleState:
+  on: "On"
+  off: "Off"
+
+advert:
+  notification: "Subscribe to listen without ads."
+
+crackdown:
+  notification: "Music is paused"
+
+installed: "Yandex.Music MSA extension has been installed"
+
+updated: "Yandex.Music MSA extension has been updated"
