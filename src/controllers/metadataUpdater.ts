@@ -1,8 +1,9 @@
-import { PlayerEvent, ITrack, CoverSize, getCoverURL } from "@yandex/externalAPI";
+import { PlayerEvent, ITrack, CoverSize, getCoverURL, IAdvert } from "@yandex/externalAPI";
 import { getMediaSession, MediaSessionPlaybackState } from "@utils/mediaSession";
 
 import { default as throttle } from "throttleit";
 import { ExternalAPIBased } from "./externalAPIBased";
+import { getAppString } from "@utils/i18n";
 
 /**
  * Размеры каверов, которые будут использоваться в качестве артворков MSA
@@ -61,6 +62,11 @@ export class MetadataUpdater extends ExternalAPIBased {
 		this._bindListener(
 			PlayerEvent.StateChanged,
 			() => this._onStateChange(),
+		);
+
+		this._externalAPI.on(
+			PlayerEvent.Advert,
+			(advert) => this._onAdvert(advert),
 		);
 	}
 
@@ -169,5 +175,29 @@ export class MetadataUpdater extends ExternalAPIBased {
 		this._mediaSession.playbackState = isPlaying
 			? MediaSessionPlaybackState.Playing
 			: MediaSessionPlaybackState.Paused;
+	}
+
+	/**
+	 * Метод вызываемый после события рекламы
+	 *
+	 * @param advert Текущее рекламное объявление
+	 */
+	private _onAdvert(advert: IAdvert | false) {
+		if (advert === false) return;
+
+		let artwork: MediaImage[] | undefined;
+
+		if (advert.image != null) {
+			artwork = [{
+				src: advert.image,
+				sizes: "900x900",
+			}];
+		}
+
+		this._mediaSession.metadata = new MediaMetadata({
+			title: advert.title,
+			album: getAppString("audio-advert", "Реклама"),
+			artwork,
+		});
 	}
 }
