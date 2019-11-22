@@ -8,7 +8,7 @@ import { MetadataUpdater } from "./controllers/metadataUpdater";
 import { ControlsUpdater } from "./controllers/controlsUpdater";
 import { Settings as SettingsAdditions } from "./controllers/settings";
 import { NowPlayingNotifications } from "./controllers/nowPlayingNotifications";
-import { showNotify } from "./yandex/hints";
+import { showNotify } from "./yandex/notify";
 
 const currentVersion = "__currentVersion__";
 
