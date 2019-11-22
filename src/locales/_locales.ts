@@ -30,7 +30,10 @@ export interface ILocale {
 		notification: string;
 	};
 	installed: string;
-	updated: string;
+	updated: {
+		body: string;
+		link: string;
+	};
 }
 
 export interface ILocaleMap {

@@ -417,7 +417,8 @@
       advert:{ notification:"Оформите подписку, чтобы слушать музыку без рекламы." },
       crackdown:{ notification:"Музыка остановлена" },
       installed:"Расширение интеграции с MSA установлено",
-      updated:"Расширение интеграции с MSA обновилось" };
+      updated:{ body:"Расширение интеграции с MSA обновилось",
+        link:"Что нового?" } };
     var mediaKeys = data.mediaKeys;
     var previousSeeking = data.previousSeeking;
     var latestNext = data.latestNext;
@@ -467,7 +468,8 @@
       advert:{ notification:"Subscribe to listen without ads." },
       crackdown:{ notification:"Music is paused" },
       installed:"Yandex.Music MSA extension has been installed",
-      updated:"Yandex.Music MSA extension has been updated" };
+      updated:{ body:"Yandex.Music MSA extension has been updated",
+        link:"What's new?" } };
     var mediaKeys$1 = data$1.mediaKeys;
     var previousSeeking$1 = data$1.previousSeeking;
     var latestNext$1 = data$1.latestNext;
@@ -2186,16 +2188,33 @@
     }
 
     /**
+     * Возвращает интерфейс уведомлений над плеером
+     *
+     * @returns Интерфейс подсказок над плеером
+     */
+    function getNotify() {
+        return getInternalAPI().blocks.get("notify");
+    }
+    /**
      * Отображает подсказку с текстом над плеером на короткое время
      *
      * @param text Текст в подсказке
      */
     function showNotify(text) {
-        const { notify } = getInternalAPI().blocks.blocks;
-        notify.show(text);
+        getNotify().show(text);
+    }
+    /**
+     * Отображает подсказку с собственным HTML над плеером на короткое время
+     *
+     * @param html HTML для встраивания в подсказку
+     * @param noClose Следует ли скрыть кнопку "Закрыть"
+     */
+    function showNotifyHTML(html, noClose) {
+        const { instance } = getNotify();
+        instance.addMessage(html, noClose);
     }
 
-    const currentVersion = "1.0.4--1574423700689";
+    const currentVersion = "1.0.4--1574424850413";
     Logger.setBaseName("Yandex.Music MSA");
     const logger$1 = new Logger("Bootstrap");
     logger$1.log("log", "Initializing...");
@@ -2243,10 +2262,18 @@
                 const firstTime = "first__time";
                 const value = yield getValueOrDefault(setting, firstTime);
                 if (value !== currentVersion) {
-                    const key = value === firstTime
-                        ? "installed"
-                        : "updated";
-                    showNotify(getStringsMap()[key]);
+                    const locMap = getStringsMap();
+                    if (value === firstTime) {
+                        showNotify(locMap.installed);
+                    }
+                    else {
+                        const { updated } = locMap;
+                        const changeLogLink = "https://github.com/Sasha-Sorokin/ymusic_msa//blob/master/CHANGELOG.md";
+                        showNotifyHTML(`${updated.body}<br>
+				<div style="margin: 0 auto; width: max-content;">
+					<a href="${changeLogLink}" rel="noopener" target="blank">${updated.link}</a>
+				</div>`);
+                    }
                     yield setValue(setting, currentVersion);
                 }
             }

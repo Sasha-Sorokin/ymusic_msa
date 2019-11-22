@@ -30,6 +30,7 @@ export default {
         replace({
             values: {
                 "__currentVersion__": `${pkg.version}--${Date.now()}`,
+                "__changeLogLink__": `${pkg.homepage}/blob/master/CHANGELOG.md`,
             },
         }),
         license({

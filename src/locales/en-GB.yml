@@ -37,4 +37,6 @@ crackdown:
 
 installed: "Yandex.Music MSA extension has been installed"
 
-updated: "Yandex.Music MSA extension has been updated"
+updated:
+  body: "Yandex.Music MSA extension has been updated"
+  link: "What's new?"

@@ -27,7 +27,7 @@ declare global {
 	 */
 	interface IYandexMusicDiRepo {
 		/**
-		 * Инстанс плеерам
+		 * Инстанс плеера
 		 */
 		player: IYandexMusicPlayer;
 		/**
@@ -53,6 +53,19 @@ declare global {
 		 * @param text Текст для отображения в уведомлении
 		 */
 		show(text: string): void;
+
+		/**
+		 * Инстанс для управления уведомлениями
+		 */
+		instance: {
+			/**
+			 * Отображает новое уведомление над плеером на короткое время
+			 *
+			 * @param html HTML код для встраивание в уведомление
+			 * @param noClose Следует ли скрывать кнопку "Закрыть"
+			 */
+			addMessage(html: string, noClose?: boolean): void;
+		};
 	}
 
 	// Просто отличительный от обычного объекта интерфейс

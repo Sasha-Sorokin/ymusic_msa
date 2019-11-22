@@ -8,7 +8,7 @@ import { MetadataUpdater } from "@controller/metadataUpdater";
 import { ControlsUpdater } from "@controller/controlsUpdater";
 import { Settings as SettingsAdditions } from "@controller/settings";
 import { NowPlayingNotifications } from "@controller/nowPlayingNotifications";
-import { showNotify } from "@yandex/notify";
+import { showNotify, showNotifyHTML } from "@yandex/notify";
 
 const currentVersion = "__currentVersion__";
 
@@ -91,11 +91,20 @@ async function applySettings() {
 		);
 
 		if (value !== currentVersion) {
-			const key = value === firstTime
-				? "installed"
-				: "updated";
+			const locMap = getStringsMap();
 
-			showNotify(getStringsMap()[key]);
+			if (value === firstTime) {
+				showNotify(locMap.installed);
+			} else {
+				const { updated } = locMap;
+
+				const changeLogLink = "__changeLogLink__";
+
+				showNotifyHTML(`${updated.body}<br>
+				<div style="margin: 0 auto; width: max-content;">
+					<a href="${changeLogLink}" rel="noopener" target="blank">${updated.link}</a>
+				</div>`);
+			}
 
 			await setValue(setting, currentVersion);
 		}
