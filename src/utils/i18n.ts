@@ -1,22 +1,10 @@
+import { getMu } from "src/yandex/repo";
 import { Locales, ILocale } from "@locales";
 
 declare global {
-	interface IYandexSettings {
-		/**
-		 * Установленный пользователем язык
-		 */
-		lang: string;
-	}
-
-	interface IYandexMusicAPI {
-		settings: IYandexSettings;
-	}
-
 	// eslint-disable-next-line @typescript-eslint/interface-name-prefix
 	interface Window {
 		i18nTranslate(keyset: string, key: string): string;
-
-		Mu: IYandexMusicAPI;
 	}
 }
 
@@ -59,7 +47,7 @@ export function getAppString(keyset: string, key: string) {
  * @throws {Error} Если не удаётся прочитать настройку приложения Яндекс.Музыки
  */
 export function tryDetectLocale() {
-	const yLocale = unsafeWindow.Mu?.settings?.lang;
+	const yLocale = getMu().settings?.lang;
 
 	if (yLocale == null) throw new Error("Failed to detect locale.");
 

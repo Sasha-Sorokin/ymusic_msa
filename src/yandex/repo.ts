@@ -56,9 +56,14 @@ declare global {
 		): ReturnType<YandexMusicBlockCostructors[K]>;
 	}
 
+	interface IYandexSettings {
+		lang: string;
+	}
+
 	interface IYandexMusicAPI {
 		Adapter: IYandexMusicAdapterStatic;
 		blocks: IYandexMusicBlocks;
+		settings: IYandexSettings;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/interface-name-prefix
