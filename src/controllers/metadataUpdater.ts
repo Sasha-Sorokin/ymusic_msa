@@ -101,7 +101,7 @@ export class MetadataUpdater extends ExternalAPIBased {
 		}
 
 		return new MediaMetadata({
-			artist: track.artists?.[0].title,
+			artist: track.artists?.[0]?.title,
 			title: track.title,
 			album: track.album?.title,
 			artwork: artworks,

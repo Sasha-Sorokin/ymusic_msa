@@ -43,7 +43,7 @@ export interface IAlbum extends ICovered {
 	/**
 	 * Исполнители альбома
 	 */
-	artists: IArtist[];
+	artists: (IArtist | undefined)[];
 }
 
 /**
@@ -73,7 +73,7 @@ export interface ITrack extends ICovered {
 	/**
 	 * Исполнители трека
 	 */
-	artists?: IArtist[];
+	artists?: (IArtist | undefined)[];
 	/**
 	 * Версия трека
 	 */
@@ -265,7 +265,7 @@ export interface IExternalAPI {
 	/**
 	 * Возвращает очередь воспроизведения
 	 */
-	getTracksList(): ITrack[];
+	getTracksList(): (ITrack | undefined)[];
 	/**
 	 * Возвращает источник
 	 */

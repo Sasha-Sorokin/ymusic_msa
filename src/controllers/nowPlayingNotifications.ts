@@ -213,7 +213,7 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 		let body = "";
 
 		if (currentTrack.artists != null) {
-			body += `${currentTrack.artists[0].title}\n`;
+			body += `${currentTrack.artists[0]?.title}\n`;
 		}
 
 		const source = this._externalAPI.getSourceInfo().title;
