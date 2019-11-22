@@ -1,4 +1,4 @@
-import { PlayerEvent, getCoverURL, CoverSize, IAdvert } from "src/yandex/externalAPI";
+import { PlayerEvent, getCoverURL, CoverSize, IAdvert } from "@yandex/externalAPI";
 import { getAppString, getStringsMap } from "@utils/i18n";
 import { NotificationDismissTime } from "@common/enums";
 import { Logger } from "@utils/logger";

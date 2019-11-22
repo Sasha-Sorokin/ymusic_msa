@@ -21,7 +21,8 @@
         "paths": {
             "@common/*": ["./src/common/*"],
             "@utils/*": ["./src/utils/*"],
-            "@locales": ["./src/locales/_locales"]
+            "@locales": ["./src/locales/_locales"],
+            "@yandex/*": ["./src/yandex/*"]
         },
         "allowJs": true,
         "esModuleInterop": true,

@@ -1,4 +1,4 @@
-import { getInternalAPI } from "src/yandex/internalAPI";
+import { getInternalAPI } from "@yandex/internalAPI";
 import { Locales, ILocale } from "@locales";
 
 declare global {

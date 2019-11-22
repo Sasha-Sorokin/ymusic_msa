@@ -1,4 +1,4 @@
-import { PlayerEvent, ITrack, CoverSize, getCoverURL } from "src/yandex/externalAPI";
+import { PlayerEvent, ITrack, CoverSize, getCoverURL } from "@yandex/externalAPI";
 import { getMediaSession, MediaSessionPlaybackState } from "@utils/mediaSession";
 
 import { default as throttle } from "throttleit";

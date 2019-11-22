@@ -1,4 +1,4 @@
-import { getExternalAPI, IExternalAPI, PlayerEvent } from "src/yandex/externalAPI";
+import { getExternalAPI, IExternalAPI, PlayerEvent } from "@yandex/externalAPI";
 
 interface IListenersMap {
 	[event: string]: (() => void) | undefined;

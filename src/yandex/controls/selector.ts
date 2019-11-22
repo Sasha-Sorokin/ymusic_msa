@@ -1,7 +1,7 @@
 import { Control } from "@common/control";
 import { createElement } from "@utils/DOM";
 import { Event } from "@utils/event";
-import { getInternalAPI } from "../internalAPI";
+import { getInternalAPI } from "@yandex/internalAPI";
 
 /**
  * Представляет собой состояние селектора

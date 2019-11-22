@@ -1,6 +1,6 @@
 import { Logger } from "@utils/logger";
-import { getExternalAPI, PlayerEvent } from "src/yandex/externalAPI";
-import { Event } from "./event";
+import { getExternalAPI, PlayerEvent } from "@yandex/externalAPI";
+import { Event } from "@utils/event";
 
 /**
  * Перечисление событий, связанных с навигацией по страницам

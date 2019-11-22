@@ -1,4 +1,4 @@
-import { getInternalAPI } from "./internalAPI";
+import { getInternalAPI } from "@yandex/internalAPI";
 
 /**
  * Отображает подсказку с текстом над плеером на короткое время

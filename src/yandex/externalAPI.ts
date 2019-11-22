@@ -1,4 +1,4 @@
-import { exposeRepo, getInternalAPI } from "./internalAPI";
+import { exposeRepo, getInternalAPI } from "@yandex/internalAPI";
 
 /**
  * Представляет собой объект, который может содержать обложку

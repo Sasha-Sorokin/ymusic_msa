@@ -1,4 +1,4 @@
-import { PlayerEvent, IAdvert } from "src/yandex/externalAPI";
+import { PlayerEvent, IAdvert } from "@yandex/externalAPI";
 import { getMediaSession, MediaSessionAction } from "@utils/mediaSession";
 import { Logger } from "@utils/logger";
 import { ExternalAPIBased } from "./externalAPIBased";

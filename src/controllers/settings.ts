@@ -1,13 +1,13 @@
 import * as navigation from "@utils/navigation";
 import { Logger } from "@utils/logger";
-import { Toggle } from "src/yandex/controls/toggleControl";
-import { SettingsLine } from "src/yandex/controls/settingsLine";
-import { SettingsBlock } from "src/yandex/controls/settingsBlock";
-import { Selector, ISelectorItem } from "src/yandex/controls/selector";
+import { Toggle } from "@yandex/controls/toggleControl";
+import { SettingsLine } from "@yandex/controls/settingsLine";
+import { SettingsBlock } from "@yandex/controls/settingsBlock";
+import { Selector, ISelectorItem } from "@yandex/controls/selector";
 import { Event, TriggerFunction } from "@utils/event";
 import { NotificationDismissTime, SettingName } from "@common/enums";
 import { getStringsMap } from "@utils/i18n";
-import { SettingsLineLabel } from "src/yandex/controls/settingsLineLabel";
+import { SettingsLineLabel } from "@yandex/controls/settingsLineLabel";
 
 const LOGGER = new Logger("SettingsController");
 
