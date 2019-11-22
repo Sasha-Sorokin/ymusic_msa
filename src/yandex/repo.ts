@@ -1,3 +1,5 @@
+import { SubType } from "@common/interfaces";
+
 declare global {
 	interface IYandexMusicAdapter {
 		on(event: string, callback: () => void): void;
@@ -27,11 +29,31 @@ declare global {
 		show(text: string): void;
 	}
 
+	// Просто отличительный от обычного объекта интерфейс
+	interface IYandexMusicBlock {
+		domDelegate(): void;
+	}
+
+	interface IYandexBlockOptions<K extends string> {
+		type: K;
+		data: unknown;
+	}
+
+	type YandexMusicBlockCostructors = SubType<IYandexMusicBlocks["blocks"], () => IYandexMusicBlock>;
+
 	interface IYandexMusicBlocks {
 		di: IYandexMusicDi;
 		blocks: {
 			notify: IYandexMusicNotify;
+			"d-select"(): IYandexMusicBlock;
 		};
+
+		get<K extends keyof IYandexMusicBlocks["blocks"]>(name: K): IYandexMusicBlocks["blocks"][K];
+
+		createBlock<K extends keyof YandexMusicBlockCostructors>(
+			creationOptions: IYandexBlockOptions<K>,
+			container: HTMLElement,
+		): ReturnType<YandexMusicBlockCostructors[K]>;
 	}
 
 	interface IYandexMusicAPI {

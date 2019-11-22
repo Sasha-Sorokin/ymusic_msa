@@ -1,7 +1,7 @@
 import { Control } from "@common/control";
 import { createElement } from "@utils/DOM";
 import { Event } from "@utils/event";
-import { createBlock } from "./_block";
+import { getMu } from "../repo";
 
 /**
  * Представляет собой состояние селектора
@@ -87,9 +87,10 @@ type ChangeEventCallback = (details: ISelectorBlockChangeDetails) => void;
 /**
  * Представляет собой объект селектора
  */
-interface ISelectorBlock extends IBlock {
+interface ISelectorBlock extends IYandexMusicBlock {
 	on(event: SelectorBlockEvent.ValueChanged, callback: ChangeEventCallback): void;
 	val(item?: ISelectorItem): ISelectorItem;
+	toggleDisabled(state: boolean): void;
 	destroy(): void;
 }
 
@@ -160,7 +161,7 @@ export class Selector extends Control<ISelectorState> {
 
 		this._wrap = wrap;
 
-		const block = <ISelectorBlock> createBlock({
+		const block = <ISelectorBlock> getMu().blocks.createBlock({
 			type: "d-select",
 			data: {
 				class: data.className,
