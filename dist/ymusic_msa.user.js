@@ -4,7 +4,7 @@
 // @name:ru Интеграция MSA для Яндекс Музыки
 // @description Integrates Yandex Music with MediaSession API
 // @description:ru Интегрирует Яндекс Музыку с API MediaSession
-// @version 1.0.2
+// @version 1.0.3
 // @author Sasha Sorokin https://github.com/Sasha-Sorokin
 // @license MIT
 //
@@ -108,7 +108,7 @@
      * @throws {Error} Если объект Mu не объявлен
      * @returns Глобальный объект Mu
      */
-    function getMu() {
+    function getInternalAPI() {
         const mu = unsafeWindow.Mu;
         if (mu == null) {
             throw new Error("Mu is not available.");
@@ -142,13 +142,13 @@
     function bindAdditionalTriggers(externalAPI) {
         if (additionalTriggersBound)
             return;
-        exposeRepo().adapter.on(getMu().Adapter.CRACKDOWN_PAUSE, () => externalAPI.trigger("crackdownPause" /* CrackdownPause */));
+        exposeRepo().adapter.on(getInternalAPI().Adapter.CRACKDOWN_PAUSE, () => externalAPI.trigger("crackdownPause" /* CrackdownPause */));
         additionalTriggersBound = true;
     }
     /**
-     * Gets current external API
+     * Возвращает внешнее API Яндекс.Музыки
      *
-     * @returns External Yandex.Music API
+     * @returns Внешнее API Яндекс.Музыки
      */
     function getExternalAPI() {
         const { externalAPI } = unsafeWindow;
@@ -160,11 +160,11 @@
         return externalAPI;
     }
     /**
-     * Gets URL to the cover of given object with given size
+     * Возвращает ссылку на обложку объекта нужного размера
      *
-     * @param obj Object containing cover
-     * @param size Size of the cover to get
-     * @returns URL to the cover
+     * @param obj Объект, ссылку на обложку которого нужно получить
+     * @param size Размер обложки
+     * @returns Ссылка на обложку
      */
     function getCoverURL(obj, size) {
         var _a;
@@ -461,7 +461,7 @@
         description:"Some browsers automatically close notifications, but some not." },
       notificationsDismissTime:{ "3s":"3 seconds after",
         "5s":"5 seconds after",
-        Auto:"Automatically" },
+        auto:"Automatically" },
       toggleState:{ on:"On",
         off:"Off" },
       advert:{ notification:"Subscribe to listen without ads." },
@@ -535,8 +535,8 @@
      * @throws {Error} Если не удаётся прочитать настройку приложения Яндекс.Музыки
      */
     function tryDetectLocale() {
-        var _a, _b;
-        const yLocale = (_b = (_a = unsafeWindow.Mu) === null || _a === void 0 ? void 0 : _a.settings) === null || _b === void 0 ? void 0 : _b.lang;
+        var _a;
+        const yLocale = (_a = getInternalAPI().settings) === null || _a === void 0 ? void 0 : _a.lang;
         if (yLocale == null)
             throw new Error("Failed to detect locale.");
         detectedLocale = convertYLocale(yLocale);
@@ -1482,17 +1482,6 @@
     }
 
     /**
-     * Создаёт новый интерактивный элемент
-     *
-     * @param creationOptions Опции для создания элемента
-     * @param container Контейнер, содержащий компоненты элемента
-     * @returns Инициализированный интерактивный элемент
-     */
-    function createBlock(creationOptions, container) {
-        return unsafeWindow.Mu.blocks.createBlock(creationOptions, container);
-    }
-
-    /**
      * Представляет собой контрол селектора
      */
     class Selector extends Control {
@@ -1542,7 +1531,7 @@
             });
             wrap.classList.add(data.className);
             this._wrap = wrap;
-            const block = createBlock({
+            const block = getInternalAPI().blocks.createBlock({
                 type: "d-select",
                 data: {
                     class: data.className,
@@ -2175,16 +2164,16 @@
     }
 
     /**
-     * Отображает подсказку с текстом
+     * Отображает подсказку с текстом над плеером на короткое время
      *
      * @param text Текст в подсказке
      */
     function showNotify(text) {
-        const { notify } = getMu().blocks.blocks;
+        const { notify } = getInternalAPI().blocks.blocks;
         notify.show(text);
     }
 
-    const currentVersion = "1.0.2--1574347226037";
+    const currentVersion = "1.0.3--1574394644063";
     Logger.setBaseName("Yandex.Music MSA");
     const logger$1 = new Logger("Bootstrap");
     logger$1.log("log", "Initializing...");
