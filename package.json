@@ -1,6 +1,6 @@
 {
   "name": "ymusic_msa",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Userscript that provides MediaSession API integration for Yandex Music",
   "author": {
     "name": "Sasha Sorokin",
