@@ -438,9 +438,9 @@ function bindAdditionalTriggers(externalAPI: IExternalAPI) {
 }
 
 /**
- * Gets current external API
+ * Возвращает внешнее API Яндекс.Музыки
  *
- * @returns External Yandex.Music API
+ * @returns Внешнее API Яндекс.Музыки
  */
 export function getExternalAPI() {
 	const { externalAPI } = unsafeWindow;
@@ -454,6 +454,9 @@ export function getExternalAPI() {
 	return externalAPI;
 }
 
+/**
+ * Перечисление размеров обложек
+ */
 export const enum CoverSize {
 	"30x30" = "30x30",
 	"50x50" = "50x50",
@@ -465,11 +468,11 @@ export const enum CoverSize {
 }
 
 /**
- * Gets URL to the cover of given object with given size
+ * Возвращает ссылку на обложку объекта нужного размера
  *
- * @param obj Object containing cover
- * @param size Size of the cover to get
- * @returns URL to the cover
+ * @param obj Объект, ссылку на обложку которого нужно получить
+ * @param size Размер обложки
+ * @returns Ссылка на обложку
  */
 export function getCoverURL(obj: ICovered, size: CoverSize): string | null {
 	const coverLink = obj.cover?.replace("%%", size);
