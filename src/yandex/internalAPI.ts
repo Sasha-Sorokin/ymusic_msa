@@ -160,7 +160,7 @@ declare global {
  * @throws {Error} Если объект Mu не объявлен
  * @returns Глобальный объект Mu
  */
-export function getMu() {
+export function getInternalAPI() {
 	const mu = unsafeWindow.Mu;
 
 	if (mu == null) {

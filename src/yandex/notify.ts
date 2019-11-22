@@ -1,4 +1,4 @@
-import { getMu } from "./repo";
+import { getInternalAPI } from "./internalAPI";
 
 /**
  * Отображает подсказку с текстом
@@ -6,7 +6,7 @@ import { getMu } from "./repo";
  * @param text Текст в подсказке
  */
 export function showNotify(text: string) {
-	const { notify } = getMu().blocks.blocks;
+	const { notify } = getInternalAPI().blocks.blocks;
 
 	notify.show(text);
 }

@@ -1,4 +1,4 @@
-import { exposeRepo, getMu } from "./repo";
+import { exposeRepo, getInternalAPI } from "./internalAPI";
 
 /**
  * Представляет собой объект, который может содержать обложку
@@ -430,7 +430,7 @@ function bindAdditionalTriggers(externalAPI: IExternalAPI) {
 	if (additionalTriggersBound) return;
 
 	exposeRepo().adapter.on(
-		getMu().Adapter.CRACKDOWN_PAUSE,
+		getInternalAPI().Adapter.CRACKDOWN_PAUSE,
 		() => externalAPI.trigger(PlayerEvent.CrackdownPause),
 	);
 

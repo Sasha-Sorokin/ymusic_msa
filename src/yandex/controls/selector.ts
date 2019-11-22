@@ -1,7 +1,7 @@
 import { Control } from "@common/control";
 import { createElement } from "@utils/DOM";
 import { Event } from "@utils/event";
-import { getMu } from "../repo";
+import { getInternalAPI } from "../internalAPI";
 
 /**
  * Представляет собой состояние селектора
@@ -161,7 +161,7 @@ export class Selector extends Control<ISelectorState> {
 
 		this._wrap = wrap;
 
-		const block = <ISelectorBlock> getMu().blocks.createBlock({
+		const block = <ISelectorBlock> getInternalAPI().blocks.createBlock({
 			type: "d-select",
 			data: {
 				class: data.className,

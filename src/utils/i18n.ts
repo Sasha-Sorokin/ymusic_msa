@@ -1,4 +1,4 @@
-import { getMu } from "src/yandex/repo";
+import { getInternalAPI } from "src/yandex/internalAPI";
 import { Locales, ILocale } from "@locales";
 
 declare global {
@@ -47,7 +47,7 @@ export function getAppString(keyset: string, key: string) {
  * @throws {Error} Если не удаётся прочитать настройку приложения Яндекс.Музыки
  */
 export function tryDetectLocale() {
-	const yLocale = getMu().settings?.lang;
+	const yLocale = getInternalAPI().settings?.lang;
 
 	if (yLocale == null) throw new Error("Failed to detect locale.");
 
