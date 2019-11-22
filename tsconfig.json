@@ -22,7 +22,8 @@
             "@common/*": ["./src/common/*"],
             "@utils/*": ["./src/utils/*"],
             "@locales": ["./src/locales/_locales"],
-            "@yandex/*": ["./src/yandex/*"]
+            "@yandex/*": ["./src/yandex/*"],
+            "@controller/*": ["./src/controllers/*"]
         },
         "allowJs": true,
         "esModuleInterop": true,

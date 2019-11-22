@@ -3,11 +3,11 @@ import * as navigation from "@utils/navigation";
 import { tryDetectLocale, getStringsMap } from "@utils/i18n";
 import { SettingName, NotificationDismissTime } from "@common/enums";
 import { getValueOrDefault, setValue } from "@utils/storage";
-import { MetadataUpdater } from "./controllers/metadataUpdater";
-import { ControlsUpdater } from "./controllers/controlsUpdater";
-import { Settings as SettingsAdditions } from "./controllers/settings";
-import { NowPlayingNotifications } from "./controllers/nowPlayingNotifications";
 import { getExternalAPI, PlayerEvent, isPlayerReady } from "@yandex/externalAPI";
+import { MetadataUpdater } from "@controller/metadataUpdater";
+import { ControlsUpdater } from "@controller/controlsUpdater";
+import { Settings as SettingsAdditions } from "@controller/settings";
+import { NowPlayingNotifications } from "@controller/nowPlayingNotifications";
 import { showNotify } from "@yandex/notify";
 
 const currentVersion = "__currentVersion__";
