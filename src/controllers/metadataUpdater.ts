@@ -1,9 +1,8 @@
 import { PlayerEvent, ITrack, CoverSize, getCoverURL, IAdvert } from "@yandex/externalAPI";
 import { getMediaSession, MediaSessionPlaybackState } from "@utils/mediaSession";
-
 import { default as throttle } from "throttleit";
-import { ExternalAPIBased } from "./externalAPIBased";
 import { getAppString } from "@utils/i18n";
+import { ExternalAPIBased } from "./externalAPIBased";
 
 /**
  * Размеры каверов, которые будут использоваться в качестве артворков MSA
