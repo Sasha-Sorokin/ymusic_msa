@@ -4,7 +4,7 @@
 // @name:ru Интеграция MSA для Яндекс Музыки
 // @description Integrates Yandex Music with MediaSession API
 // @description:ru Интегрирует Яндекс Музыку с API MediaSession
-// @version 1.0.3
+// @version 1.0.4
 // @author Sasha Sorokin https://github.com/Sasha-Sorokin
 // @license MIT
 //
@@ -753,6 +753,7 @@
                 this._bindListener("progress" /* Progress */, onProgress);
             }
             this._bindListener("state" /* StateChanged */, () => this._onStateChange());
+            this._externalAPI.on("advert" /* Advert */, (advert) => this._onAdvert(advert));
         }
         /**
          * Принудительно вызывает методы обновления метаданных
@@ -769,7 +770,7 @@
          * @returns Объект метаданных для MSA
          */
         _convertToMetadata(track) {
-            var _a, _b;
+            var _a, _b, _c;
             const artworks = [];
             if (track.cover != null) {
                 for (const size of ARTWORKS_SIZES) {
@@ -783,9 +784,9 @@
                 }
             }
             return new MediaMetadata({
-                artist: (_a = track.artists) === null || _a === void 0 ? void 0 : _a[0].title,
+                artist: (_b = (_a = track.artists) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.title,
                 title: track.title,
-                album: (_b = track.album) === null || _b === void 0 ? void 0 : _b.title,
+                album: (_c = track.album) === null || _c === void 0 ? void 0 : _c.title,
                 artwork: artworks,
             });
         }
@@ -832,6 +833,27 @@
             this._mediaSession.playbackState = isPlaying
                 ? "playing" /* Playing */
                 : "paused" /* Paused */;
+        }
+        /**
+         * Метод вызываемый после события рекламы
+         *
+         * @param advert Текущее рекламное объявление
+         */
+        _onAdvert(advert) {
+            if (advert === false)
+                return;
+            let artwork;
+            if (advert.image != null) {
+                artwork = [{
+                        src: advert.image,
+                        sizes: "900x900",
+                    }];
+            }
+            this._mediaSession.metadata = new MediaMetadata({
+                title: advert.title,
+                album: getAppString("audio-advert", "Реклама"),
+                artwork,
+            });
         }
     }
 
@@ -2101,7 +2123,7 @@
          * Метод вызываемый после события изменения трека
          */
         _onTrackChange() {
-            var _a;
+            var _a, _b;
             const currentTrack = this._externalAPI.getCurrentTrack();
             // Мы могли бы использовать новомодное API видимости вкладки, но
             // к сожалению, оно не берёт во внимание переключение пользователя
@@ -2110,14 +2132,14 @@
                 return;
             let body = "";
             if (currentTrack.artists != null) {
-                body += `${currentTrack.artists[0].title}\n`;
+                body += `${(_a = currentTrack.artists[0]) === null || _a === void 0 ? void 0 : _a.title}\n`;
             }
             const source = this._externalAPI.getSourceInfo().title;
             const service = getAppString("meta", "Яндекс.Музыка");
             body += `${source} · ${service}`;
             this._createNotification(currentTrack.title, {
                 // eslint-disable-next-line
-                icon: (_a = getCoverURL(currentTrack, "200x200" /* "200x200" */), (_a !== null && _a !== void 0 ? _a : undefined)),
+                icon: (_b = getCoverURL(currentTrack, "200x200" /* "200x200" */), (_b !== null && _b !== void 0 ? _b : undefined)),
                 body,
             });
         }
@@ -2173,7 +2195,7 @@
         notify.show(text);
     }
 
-    const currentVersion = "1.0.3--1574394644063";
+    const currentVersion = "1.0.4--1574423700689";
     Logger.setBaseName("Yandex.Music MSA");
     const logger$1 = new Logger("Bootstrap");
     logger$1.log("log", "Initializing...");
