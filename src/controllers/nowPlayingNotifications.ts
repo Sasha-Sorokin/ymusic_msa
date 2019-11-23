@@ -19,6 +19,12 @@ const DISMISS_TIMES: { [O in NotificationDismissTime]: number } = {
  * Контроллер отвечающий за отправку уведомлений о текущем играющем треке
  */
 export class NowPlayingNotifications extends ExternalAPIBased {
+	constructor() {
+		super();
+
+		this._imageSupported = "image" in Notification.prototype;
+	}
+
 	/**
 	 * Текущия опция времени закрытия уведомлений
 	 */
@@ -28,6 +34,11 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 	 * Включены ли уведомления
 	 */
 	private _notificationsEnabled: boolean = false;
+
+	/**
+	 * Поддерживается ли отображение картинок в уведомлениях
+	 */
+	private readonly _imageSupported: boolean;
 
 	/**
 	 * Проверяет возможность отправки уведомлений и переключает их статус
@@ -259,8 +270,10 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 		let body = isTitled ? `${label}\n` : "";
 		body += getStringsMap().advert.notification;
 
+		const imgDisplayMethod = this._imageSupported ? "image" : "icon";
+
 		const options: NotificationOptions = {
-			image: advert.image,
+			[imgDisplayMethod]: advert.image,
 			body,
 		};
 
