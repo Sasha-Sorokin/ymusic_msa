@@ -109,11 +109,11 @@ export interface IAdvert {
 	/**
 	 * Название объявления
 	 */
-	title: string;
+	title?: string;
 	/**
 	 * Изображение объявления
 	 */
-	image: string;
+	image?: string;
 	/**
 	 * Ссылка, куда перенаправляет объявление
 	 */

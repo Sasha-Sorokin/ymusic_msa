@@ -252,8 +252,11 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 		const ad = getAppString("audio-advert", "Реклама");
 		const service = getAppString("meta", "Яндекс.Музыка");
 
-		let body = `${ad} · ${service}\n`;
+		const isTitled = advert.title != null;
 
+		const label = `${ad} ${isTitled ? "·" : "—"} ${service}`;
+
+		let body = isTitled ? `${label}\n` : "";
 		body += getStringsMap().advert.notification;
 
 		const options: NotificationOptions = {
@@ -262,7 +265,7 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 		};
 
 		this._previousAdNotification = this._createNotification(
-			advert.title,
+			isTitled ? advert.title! : label,
 			options,
 			false, // Стараемся удержать уведомление максимально подольше
 		);
