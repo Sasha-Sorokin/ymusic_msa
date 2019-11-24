@@ -176,6 +176,14 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 	}
 
 	/**
+	 * Возвращает фокус вкладке
+	 */
+	private _focusWindow() {
+		unsafeWindow.focus();
+		unsafeWindow.parent.focus();
+	}
+
+	/**
 	 * Создаёт новое уведомление, устанавливает таймер его закрытия
 	 * и привязывает обработчик клика для возврата фокуса вкладке
 	 *
@@ -185,9 +193,15 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 	 * @param title Заголовок уведомления
 	 * @param options Дополнительные опции для уведомления
 	 * @param dismiss Нужно ли автоматически убирать уведомление
+	 * @param bindFocus Следует ли вешать обработчик для клика, возвращающий фокус окну
 	 * @returns Созданное уведомление
 	 */
-	private _createNotification(title: string, options: NotificationOptions, dismiss = true) {
+	private _createNotification(
+		title: string,
+		options: NotificationOptions,
+		dismiss = true,
+		bindFocus = true,
+	) {
 		const notification = new Notification(title, {
 			tag: "yamumsa--nowplaying",
 			silent: true,
@@ -202,10 +216,9 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 			}
 		}
 
-		notification.addEventListener("click", () => {
-			unsafeWindow.focus();
-			unsafeWindow.parent.focus();
-		});
+		if (bindFocus) {
+			notification.addEventListener("click", () => this._focusWindow());
+		}
 
 		return notification;
 	}
@@ -254,6 +267,8 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 	private _onAdvert(advert: IAdvert | false) {
 		// Всегда принудительно закрываем прошлое уведомление с рекламой,
 		// иногда пользователь может перейти ко вкладке и мы не станем
+		// отправлять новое уведомление, посему старое "застынет" и ему
+		// придётся закрывать его вручную
 		if (this._previousAdNotification != null) {
 			this._previousAdNotification.close();
 
@@ -279,11 +294,22 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 			body,
 		};
 
-		this._previousAdNotification = this._createNotification(
+		const notification = this._createNotification(
 			isTitled ? advert.title! : label,
 			options,
 			false, // Стараемся удержать уведомление максимально подольше
+			false,
 		);
+
+		notification.addEventListener("click", () => {
+			if (this._externalAPI.navigate(advert.link)) {
+				this._focusWindow();
+			} else {
+				window.open(advert.link, "_blank", "noopener");
+			}
+		});
+
+		this._previousAdNotification = notification;
 	}
 
 	/**

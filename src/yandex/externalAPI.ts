@@ -405,7 +405,7 @@ export interface IExternalAPI {
 	 *
 	 * @param url URL к которому необходимо перейти
 	 */
-	navigate(url: string): void;
+	navigate(url: string): boolean;
 
 	/**
 	 * В буквальном смысле заспамливает консоль полезнейшей информацией о внешнем API
