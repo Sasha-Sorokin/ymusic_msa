@@ -4,7 +4,7 @@
 // @name:ru Интеграция MSA для Яндекс Музыки
 // @description Integrates Yandex Music with MediaSession API
 // @description:ru Интегрирует Яндекс Музыку с API MediaSession
-// @version 1.0.5
+// @version 1.0.6
 // @author Sasha Sorokin https://github.com/Sasha-Sorokin
 // @license MIT
 //
@@ -2008,7 +2008,7 @@
      */
     class NowPlayingNotifications extends ExternalAPIBased {
         constructor() {
-            super(...arguments);
+            super();
             /**
              * Текущия опция времени закрытия уведомлений
              */
@@ -2017,6 +2017,7 @@
              * Включены ли уведомления
              */
             this._notificationsEnabled = false;
+            this._imageSupported = "image" in Notification.prototype;
         }
         /**
          * Проверяет возможность отправки уведомлений и переключает их статус
@@ -2161,13 +2162,16 @@
                 return;
             const ad = getAppString("audio-advert", "Реклама");
             const service = getAppString("meta", "Яндекс.Музыка");
-            let body = `${ad} · ${service}\n`;
+            const isTitled = advert.title != null;
+            const label = `${ad} ${isTitled ? "·" : "—"} ${service}`;
+            let body = isTitled ? `${label}\n` : "";
             body += getStringsMap().advert.notification;
+            const imgDisplayMethod = this._imageSupported ? "image" : "icon";
             const options = {
-                image: advert.image,
+                [imgDisplayMethod]: advert.image,
                 body,
             };
-            this._previousAdNotification = this._createNotification(advert.title, options, false);
+            this._previousAdNotification = this._createNotification(isTitled ? advert.title : label, options, false);
         }
         /**
          * Метод вызываемый после события остановки из-за длительного прослушивания в фоне
@@ -2214,7 +2218,7 @@
         instance.addMessage(html, noClose);
     }
 
-    const currentVersion = "1.0.5--1574425344071";
+    const currentVersion = "1.0.6--1574594385927";
     Logger.setBaseName("Yandex.Music MSA");
     const logger$1 = new Logger("Bootstrap");
     logger$1.log("log", "Initializing...");
