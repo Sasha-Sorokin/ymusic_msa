@@ -230,7 +230,9 @@ export class NowPlayingNotifications extends ExternalAPIBased {
 		const source = this._externalAPI.getSourceInfo().title;
 		const service = getAppString("meta", "Яндекс.Музыка");
 
-		body += `${source} · ${service}`;
+		if (source != null) body += `${source} · `;
+
+		body += `${service}`;
 
 		this._createNotification(currentTrack.title, {
 			// eslint-disable-next-line

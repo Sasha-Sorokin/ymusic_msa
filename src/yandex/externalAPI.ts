@@ -123,7 +123,18 @@ export interface IAdvert {
 /**
  * Представляет собой источник проигрывания треков
  */
-export interface ISourceInfo extends IPlaylist {
+export interface ISourceInfo extends ICovered {
+	/**
+	 * Название источника
+	 */
+	title?: string;
+	/**
+	 * Ссылка для источнкиа
+	 */
+	link?: string;
+	/**
+	 * Тип источника
+	 */
 	type: "playlist" | "album" | "radio" | "common";
 }
 
