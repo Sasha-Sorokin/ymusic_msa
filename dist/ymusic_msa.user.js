@@ -4,7 +4,7 @@
 // @name:ru Интеграция MSA для Яндекс Музыки
 // @description Integrates Yandex Music with MediaSession API
 // @description:ru Интегрирует Яндекс Музыку с API MediaSession
-// @version 1.0.6
+// @version 1.0.7
 // @author Sasha Sorokin https://github.com/Sasha-Sorokin
 // @license MIT
 //
@@ -2097,6 +2097,13 @@
             return anyUnbound;
         }
         /**
+         * Возвращает фокус вкладке
+         */
+        _focusWindow() {
+            unsafeWindow.focus();
+            unsafeWindow.parent.focus();
+        }
+        /**
          * Создаёт новое уведомление, устанавливает таймер его закрытия
          * и привязывает обработчик клика для возврата фокуса вкладке
          *
@@ -2106,9 +2113,10 @@
          * @param title Заголовок уведомления
          * @param options Дополнительные опции для уведомления
          * @param dismiss Нужно ли автоматически убирать уведомление
+         * @param bindFocus Следует ли вешать обработчик для клика, возвращающий фокус окну
          * @returns Созданное уведомление
          */
-        _createNotification(title, options, dismiss = true) {
+        _createNotification(title, options, dismiss = true, bindFocus = true) {
             const notification = new Notification(title, Object.assign({ tag: "yamumsa--nowplaying", silent: true }, options));
             if (dismiss) {
                 const dismissAfter = DISMISS_TIMES[this.dismissTime];
@@ -2116,10 +2124,9 @@
                     setTimeout(() => notification.close(), dismissAfter);
                 }
             }
-            notification.addEventListener("click", () => {
-                unsafeWindow.focus();
-                unsafeWindow.parent.focus();
-            });
+            if (bindFocus) {
+                notification.addEventListener("click", () => this._focusWindow());
+            }
             return notification;
         }
         /**
@@ -2139,7 +2146,9 @@
             }
             const source = this._externalAPI.getSourceInfo().title;
             const service = getAppString("meta", "Яндекс.Музыка");
-            body += `${source} · ${service}`;
+            if (source != null)
+                body += `${source} · `;
+            body += `${service}`;
             this._createNotification(currentTrack.title, {
                 // eslint-disable-next-line
                 icon: (_b = getCoverURL(currentTrack, "200x200" /* "200x200" */), (_b !== null && _b !== void 0 ? _b : undefined)),
@@ -2154,6 +2163,8 @@
         _onAdvert(advert) {
             // Всегда принудительно закрываем прошлое уведомление с рекламой,
             // иногда пользователь может перейти ко вкладке и мы не станем
+            // отправлять новое уведомление, посему старое "застынет" и ему
+            // придётся закрывать его вручную
             if (this._previousAdNotification != null) {
                 this._previousAdNotification.close();
                 this._previousAdNotification = undefined;
@@ -2171,7 +2182,17 @@
                 [imgDisplayMethod]: advert.image,
                 body,
             };
-            this._previousAdNotification = this._createNotification(isTitled ? advert.title : label, options, false);
+            const notification = this._createNotification(isTitled ? advert.title : label, options, false, // Стараемся удержать уведомление максимально подольше
+            false);
+            notification.addEventListener("click", () => {
+                if (this._externalAPI.navigate(advert.link)) {
+                    this._focusWindow();
+                }
+                else {
+                    window.open(advert.link, "_blank", "noopener");
+                }
+            });
+            this._previousAdNotification = notification;
         }
         /**
          * Метод вызываемый после события остановки из-за длительного прослушивания в фоне
@@ -2218,7 +2239,7 @@
         instance.addMessage(html, noClose);
     }
 
-    const currentVersion = "1.0.6--1574594385927";
+    const currentVersion = "1.0.7--1574662245617";
     Logger.setBaseName("Yandex.Music MSA");
     const logger$1 = new Logger("Bootstrap");
     logger$1.log("log", "Initializing...");
