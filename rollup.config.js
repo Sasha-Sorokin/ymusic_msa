@@ -44,7 +44,6 @@ export default {
         }),
     ],
 
-    experimentalTopLevelAwait: true,
     experimentalOptimizeChunks: true,
 
     external: {
