@@ -45,6 +45,16 @@ type SettingUpdatedCallback<K extends keyof ISettingsStates = keyof ISettingsSta
 type DismissSelectorItemsMap = WeakMap<ISelectorItem, NotificationDismissTime>;
 
 /**
+ * Представляет собой данные страницы настроек
+ */
+interface ISettingsPageData {
+	/**
+	 * Текущая вкладка настроек
+	 */
+	what: string;
+}
+
+/**
  * Waits when settings page is loaded and adds ours controls
  */
 export class Settings {
@@ -100,7 +110,11 @@ export class Settings {
 	public bindEvents() {
 		navigation.onNavigationTo(
 			"page-settings",
-			({ what }) => this._onSettingsPageLoaded(what),
+			({ data }) => {
+				const { what } = <ISettingsPageData> data;
+
+				this._onSettingsPageLoaded(what);
+			},
 		);
 	}
 
